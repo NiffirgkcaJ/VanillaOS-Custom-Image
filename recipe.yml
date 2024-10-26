@@ -49,13 +49,13 @@ stages:
           - echo "deb [signed-by=/usr/share/keyrings/debian-archive-key-12.asc] http://deb.debian.org/debian/ bookworm-updates main contrib non-free" | sudo tee -a /etc/apt/sources.list.d/debian-bookworm.list
           - echo "deb [signed-by=/usr/share/keyrings/debian-archive-key-12.asc] http://deb.debian.org/debian/ bookworm-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list.d/debian-bookworm.list
           - echo "deb [signed-by=/usr/share/keyrings/debian-archive-key-12.asc] http://deb.debian.org/debian/ bookworm-proposed-updates main contrib non-free" | sudo tee -a /etc/apt/sources.list.d/debian-bookworm.list
-          - echo "Package: *" > temp_debian
-          - echo "Pin: origin deb.debian.org" >> temp_debian
-          - echo "Pin-Priority: 100" >> temp_debian
-          - echo "" >> temp_debian
-          - echo "Package: *" >> temp_debian
-          - echo "Pin: origin security.debian.org" >> temp_debian
-          - echo "Pin-Priority: 100" >> temp_debian
+          - echo 'Package: *' > temp_debian
+          - echo 'Pin: origin deb.debian.org' >> temp_debian
+          - echo 'Pin-Priority: 100' >> temp_debian
+          - echo '' >> temp_debian
+          - echo 'Package: *' >> temp_debian
+          - echo 'Pin: origin security.debian.org' >> temp_debian
+          - echo 'Pin-Priority: 100' >> temp_debian
           - sudo mv temp_debian /etc/apt/preferences.d/debian
       - name: install-firefox
         type: shell
@@ -63,9 +63,9 @@ stages:
           - sudo install -d -m 0755 /etc/apt/keyrings
           - wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
           - echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-          - echo "Package: *" > temp_mozilla
-          - echo "Pin: origin packages.mozilla.org" >> temp_mozilla
-          - echo "Pin-Priority: 1000" >> temp_mozilla
+          - echo 'Package: *' > temp_mozilla
+          - echo 'Pin: origin packages.mozilla.org' >> temp_mozilla
+          - echo 'Pin-Priority: 1000' >> temp_mozilla
           - sudo mv temp_mozilla /etc/apt/preferences.d/mozilla
           - apt-get update
           - apt-get install -y firefox
