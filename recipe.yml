@@ -74,8 +74,6 @@ stages:
         type: shell
         commands:
           - apt-get update
-          - sudo apt dist-upgrade
-          - sudo apt-get install -f
       - name: install-dependencies
         type: apt
         source:
