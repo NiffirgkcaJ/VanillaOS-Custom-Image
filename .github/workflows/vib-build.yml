@@ -130,8 +130,9 @@ jobs:
     - name: Setup GNOME customizations
       run: |
         git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
-        chmod +x GNOME-Customizations/install.sh
-        ./GNOME-Customizations/install.sh
+        cd GNOME-Customizations
+        chmod +x install.sh
+        ./install.sh
         cd ../
         rm -rf GNOME-Customizations
 
