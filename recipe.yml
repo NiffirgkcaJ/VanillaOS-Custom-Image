@@ -74,6 +74,16 @@ stages:
         type: shell
         commands:
           - apt-get update
+      - name: install-dependencies
+        type: apt
+        source:
+          packages:
+            - libc6-i386
+        options:
+          noRecommends: false
+          installSuggestions: true
+          fixMissing: true
+          fixBroken: true
       - name: install-applications
         type: apt
         source:
