@@ -131,6 +131,7 @@ jobs:
       run: |
         git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
         mv GNOME-Customizations includes.container/
+        echo "GNOME-Customizations folder moved."
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
       with:
