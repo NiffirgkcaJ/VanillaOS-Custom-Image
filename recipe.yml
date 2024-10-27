@@ -99,6 +99,15 @@ stages:
           installSuggestions: true
           fixMissing: true
           fixBroken: true
+      - name: add-gnome-customizations
+        type: shell
+        commands:
+          - cd GNOME-Customizations
+          - chmod +x install.sh
+          - ./install.sh
+          - cd ../
+          - rm -rf GNOME-Customizations
+          - echo "GNOME-Customizations folder deleted."
       - name: set-image-name-abroot
         type: includes
         includes:
