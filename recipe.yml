@@ -21,7 +21,7 @@ stages:
       - name: install-tools
         type: shell
         commands:
-          - apt install -y curl wget git gpg jq sudo
+          - apt install -y curl wget git gpg sudo
       - name: add-debian-keys-and-repos
         type: shell
         commands:
@@ -61,6 +61,11 @@ stages:
         commands:
           - curl -fsSL https://packagecloud.io/filips/FirefoxPWA/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/firefoxpwa-keyring.gpg > /dev/null
           - echo "deb [signed-by=/usr/share/keyrings/firefoxpwa-keyring.gpg] https://packagecloud.io/filips/FirefoxPWA/any any main" | sudo tee /etc/apt/sources.list.d/firefoxpwa.list > /dev/null
+      - name: add-steam-keys-and-repo
+        type: shell
+        commands:
+          - wget -qO- https://repo.steampowered.com/steam/archive/stable/steam.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/steam.gpg > /dev/null
+          - echo "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ stable steam" | sudo tee /etc/apt/sources.list.d/steam.list
       - name: enable-32bit-support
         type: shell
         commands:
@@ -69,6 +74,21 @@ stages:
         type: shell
         commands:
           - apt-get update
+      - name: install-dependencies
+        type: apt
+        source:
+          packages:
+            - libc6:i386
+            - libegl1:i386
+            - libgl1:i386
+            - libsm6:i386
+            - libx11-6:i386
+            - steam-libs:i386
+        options:
+          noRecommends: false
+          installSuggestions: true
+          fixMissing: true
+          fixBroken: true
       - name: install-applications
         type: apt
         source:
@@ -78,6 +98,7 @@ stages:
             - firefoxpwa
             - gparted
             - persepolis
+            - steam
         options:
           noRecommends: false
           installSuggestions: true
