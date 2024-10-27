@@ -126,9 +126,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-      # Clone the GNOME-customizations repository here
-    - name: Clone GNOME customizations
-      run: git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
+      # GNOME-customizations repository
+    - name: GNOME Customizations
+      run: |
+        git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
+        mv GNOME-Customizations includes.container/
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
       with:
