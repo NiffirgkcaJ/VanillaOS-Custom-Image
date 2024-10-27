@@ -126,16 +126,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-        # Add the GNOME customizations step here
-    - name: Setup GNOME customizations
-      run: |
-        git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
-        cd GNOME-Customizations
-        chmod +x install.sh
-        ./install.sh
-        cd ../
-        rm -rf GNOME-Customizations
-        echo "GNOME-Customizations deleted."
+      # Clone the GNOME-customizations repository here
+    - name: Clone GNOME customizations
+      run: git clone https://${{ secrets.SECRET_TOKEN }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
       with:
