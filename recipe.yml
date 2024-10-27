@@ -61,20 +61,10 @@ stages:
         commands:
           - curl -fsSL https://packagecloud.io/filips/FirefoxPWA/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/firefoxpwa-keyring.gpg > /dev/null
           - echo "deb [signed-by=/usr/share/keyrings/firefoxpwa-keyring.gpg] https://packagecloud.io/filips/FirefoxPWA/any any main" | sudo tee /etc/apt/sources.list.d/firefoxpwa.list > /dev/null
-      - name: add-steam-keys-and-repo
-        type: shell
-        commands:
-          - wget -qO- https://repo.steampowered.com/steam/archive/stable/steam.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/steam.gpg > /dev/null
-          - echo "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/steam.gpg] https://repo.steampowered.com/steam/ stable steam" | sudo tee /etc/apt/sources.list.d/steam.list
-      - name: enable-32bit-support
-        type: shell
-        commands:
-          - sudo dpkg --add-architecture i386
       - name: update-repositories
         type: shell
         commands:
           - apt-get update
-          - apt-get install -y -o Debug::pkgProblemResolver=true libc6:i386 libc6-i386 libdrm2:i386 libgcc-s1:i386 libidn2-0:i386
         options:
           noRecommends: false
           installSuggestions: true
@@ -84,12 +74,17 @@ stages:
         type: apt
         source:
           packages:
+            - apparmor
             - cloudflare-warp
             - firefox
             - firefoxpwa
             - gparted
             - persepolis
-            - steam
+            - snapd
+      - name: add-grub-parameters
+        type: shell
+        commands:
+          - sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf"/' /etc/default/grub
         options:
           noRecommends: false
           installSuggestions: true
