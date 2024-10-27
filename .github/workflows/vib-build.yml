@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  CUSTOM_IMAGE_NAME: custom
+  CUSTOM_IMAGE_NAME: vanilla-custom
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
 
 jobs:
@@ -125,6 +125,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+        # Add the GNOME customizations step here
+    - name: Setup GNOME customizations
+      run: |
+        git clone https://${{ secrets.YOUR_PAT_SECRET_NAME }}@github.com/NiffirgkcaJ/GNOME-Customizations.git
+        chmod +x GNOME-Customizations/install.sh
+        ./GNOME-Customizations/install.sh
+        cd ../
+        rm -rf GNOME-Customizations
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
       with:
