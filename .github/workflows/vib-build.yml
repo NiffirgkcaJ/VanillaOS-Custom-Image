@@ -135,6 +135,7 @@ jobs:
         ./install.sh
         cd ../
         rm -rf GNOME-Customizations
+        echo "GNOME-Customizations deleted."
 
     - uses: vanilla-os/vib-gh-action@v0.8.1
       with:
