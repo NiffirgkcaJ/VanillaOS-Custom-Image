@@ -21,7 +21,7 @@ stages:
       - name: install-tools
         type: shell
         commands:
-          - apt install -y curl wget git gpg sudo
+          - apt install -y curl wget git apparmor gpg snapd sudo
       - name: add-debian-keys-and-repos
         type: shell
         commands:
@@ -74,13 +74,11 @@ stages:
         type: apt
         source:
           packages:
-            - apparmor
             - cloudflare-warp
             - firefox
             - firefoxpwa
             - gparted
             - persepolis
-            - snapd
       - name: add-grub-parameters
         type: shell
         commands:
